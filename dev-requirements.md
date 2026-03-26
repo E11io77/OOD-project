@@ -21,11 +21,16 @@ category/instruction
 # Domain Concept Identification
 4 classes :: 
 
-PRODUCT
-<br>name<br>category<br>estimated_lifespan<br>material_list<br>.calculate()
+PRODUCT (value object)
+<br>name<br>category<br>estimated_lifespan<br>material_list
 
-MATERIAL
+MATERIAL (value object)
 <br>name
+
+RECYCLING GUIDANCE (??)
+<br>name
+
+IMPACT CALCULATOR (SERVICE)
 
 # Git Commands
 `git clone`
@@ -42,3 +47,17 @@ feature/addProducts
 `git push origin branchName`
 `git branch`
 `git branch -d nameOfTheBranch`
+
+# CRC Cards
+
+## Products
+| Responsibility | Collaborators |
+| :------------- | :------------ |
+| Know its attributes | Materials |
+| Hold list of materials | Environmental Impact Calculator |
+| Expose composition for Environmental Impact Calculator | Recycling Guidance |
+
+## Materials
+| Responsibility | Collaborators |
+| :------------- | :------------ |
+| Know its attributes | 
