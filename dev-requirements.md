@@ -19,11 +19,26 @@ category/instruction
 ## Outside Boundary
 - Database for products and materials
 # Domain Concept Identification
-TODO;
-<!-- 4 classes :: 
+4 classes :: 
 
 PRODUCT
 <br>name<br>category<br>estimated_lifespan<br>material_list<br>.calculate()
 
 MATERIAL
-<br>name -->
+<br>name
+
+# Git Commands
+`git clone`
+`git clone https://github.com/flavio-colangelo/ood-project`
+`git checkout nameOFTheBranch`
+`git checkout -b nameOfTheBranch`
+bug/date/nameOfTheBug
+feature/addProducts
+`git status`
+`git add fileName.extension`
+`git add .`
+*.class
+`git commit -m 'enter your message here'`
+`git push origin branchName`
+`git branch`
+`git branch -d nameOfTheBranch`
