@@ -34,22 +34,6 @@ DATABASE MANAGER (entity)
 
 MENU (entity)
 
-# Git Commands
-`git clone`<br>
-`git clone https://github.com/flavio-colangelo/ood-project`<br>
-`git checkout nameOFTheBranch`<br>
-`git checkout -b nameOfTheBranch`<br>
-bug/date/nameOfTheBug<br>
-feature/addProducts<br>
-`git status`<br>
-`git add fileName.extension`<br>
-`git add .`<br>
-*.class<br>
-`git commit -m 'enter your message here'`<br>
-`git push origin branchName`<br>
-`git branch`<br>
-`git branch -d nameOfTheBranch`
-
 # CRC Cards
 
 ## Products - value
@@ -58,7 +42,8 @@ feature/addProducts<br>
 | Know its attributes | Materials |
 | Hold list of materials | Environmental Impact Calculator |
 | Expose composition for Environmental Impact Calculator | Recycling Guidance |
-|  | Database Manager |
+| Add into database | Database Manager |
+|  |  |
 
 ## Materials - value
 | Responsibility | Collaborators |
@@ -82,13 +67,35 @@ feature/addProducts<br>
 ## Database Manager - entity
 | Responsibility | Collaborators |
 | :------------- | :------------ |
-| Hold databsae credentials |  |
+| Hold database credentials |  |
 | Fetch from database |  |
 | Store in database |  |
 
 ## Menu (entity)
 | Responsibility | Collaborators |
 | :------------- | :------------ |
-| Store menu options |  |
+| Store menu options | Products |
 | Display menu options |  |
 | Handle user input |  |
+
+# PUML
+```puml
+@start john
+
+```
+
+# Git Commands
+`git clone`<br>
+`git clone https://github.com/flavio-colangelo/ood-project`<br>
+`git checkout nameOFTheBranch`<br>
+`git checkout -b nameOfTheBranch`<br>
+bug/date/nameOfTheBug<br>
+feature/addProducts<br>
+`git status`<br>
+`git add fileName.extension`<br>
+`git add .`<br>
+*.class<br>
+`git commit -m 'enter your message here'`<br>
+`git push origin branchName`<br>
+`git branch`<br>
+`git branch -d nameOfTheBranch`
