@@ -47,7 +47,7 @@ The product class is responsible for storing information about itself such as na
 |  |  |
 
 ## Materials - value
-The material class is responsible for storing information about itself such as name, impact value and recycling guidance. The material knows its attributes. The material makes its composition available for the Product.
+The Material class is responsible for storing information about a material such as name and recycling guidance. The Material knows its attributes. The Material provides its properties to the Product.
 | Responsibility | Collaborators |
 | :------------- | :------------ |
 | Know its attributes | Products |
