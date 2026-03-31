@@ -36,20 +36,20 @@ MENU (entity)
 
 # CRC Cards
 
-## Products - value
+## Product - value
 | Responsibility | Collaborators |
 | :------------- | :------------ |
-| Know its attributes | Materials |
+| Know its attributes | Material |
 | Hold list of materials | Environmental Impact Calculator |
 | Expose composition for Environmental Impact Calculator | Recycling Guidance |
 | Add into database | Database Manager |
 |  |  |
 
-## Materials - value
+## Material - value
 | Responsibility | Collaborators |
 | :------------- | :------------ |
-| Know its attributes | Products (referenced by) |
-| Be reusable across products | Materials |
+| Know its attributes | Product (referenced by) |
+| Be reusable across products | Material |
 |  | Database Manager |
 
 ## Recycling Guidance - service
@@ -67,14 +67,14 @@ MENU (entity)
 ## Database Manager - entity
 | Responsibility | Collaborators |
 | :------------- | :------------ |
-| Hold database credentials |  |
+| Hold database credentials | Product |
 | Fetch from database |  |
 | Store in database |  |
 
-## Menu (entity)
+## Menu - entity
 | Responsibility | Collaborators |
 | :------------- | :------------ |
-| Store menu options | Products |
+| Store menu options | Product |
 | Display menu options |  |
 | Handle user input |  |
 
