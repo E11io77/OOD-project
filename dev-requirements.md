@@ -47,7 +47,7 @@ The product class is responsible for storing information about itself such as na
 |  |  |
 
 ## Materials - value
-The material class is responsible for storing information about itself such as name and recycling guidance. The material knows its attributes. The material makes its composition available for the Product.
+The material class is responsible for storing information about itself such as name, impact value and recycling guidance. The material knows its attributes. The material makes its composition available for the Product.
 | Responsibility | Collaborators |
 | :------------- | :------------ |
 | Know its attributes | Products |
@@ -72,7 +72,7 @@ The recycling guidance class provides the user with the guidance based on the pr
 | Handle mixed materials |  |
 
 ## Impact Calculator - service
-The Impact Calculator calculates the environmental impact of a product based on its material. It knows the composition of a product.
+The Impact Calculator calculates the environmental impact of a product based on its material. It uses the composition of a product to calculate the environmental impact.
 | Responsibility | Collaborators |
 | :------------- | :------------ |
 | Calculate environmental impact | Product |
