@@ -104,40 +104,46 @@ class Product {
     - category : Category
     - estimatedLifespan : Integer
     - material : List<Material>
+    - impactCalculator : ImpactCalculator
 }
 
 class Material {
     - name : String
     - recyclingGuidance : List<String>
+    - impactValue : Integer
 }
 
-class ImpactCalculator {
+interface ImpactCalculator {
 
 }
 
-class Category {
-    - name : String
-    - recyclingGuidance : List<String>
-}
 
 ' class DatabaseManager {
 '     - username : String
 '     - password : String
 ' }
 ' 
-' class Menu {
-'     - menuOptions : List<String>
-' }
+ class Menu {
+     - menuOptions : List<String>
+ }
 
-Product "*" *-- "1" Category
+ class firstCalculatorStrategy {
+
+ }
+
+ class secondCalculatorStrategy {
+
+ }
+
 Product "*" *-- "*" Material
 Product <-- RecyclingGuidance : curates from
 Product --> ImpactCalculator : uses
-' Menu --> Product : uses
+Menu --> Product : uses
 ' DatabaseManager <-- Product : uses
 ' DatabaseManager <-- Material : uses
 ' Menu --> RecyclingGuidance : uses
-
+firstCalculatorStrategy -->  ImpactCalculator : implements
+secondCalculatorStrategy implements impactCalculator
 @enduml diagram
 ```
 
