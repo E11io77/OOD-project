@@ -47,7 +47,7 @@ The Product class is responsible for storing information about itself such as na
 |  |  |
 
 ## Materials - value
-The Material class is responsible for storing information about itself such as name and recycling guidance. The Material knows its attributes. The Material makes its composition available for the Product.
+The Material class is responsible for storing information about itself such as name, recycling guidance and impact value. The Material knows its attributes. The Material makes its composition available for the Product.
 | Responsibility | Collaborators |
 | :------------- | :------------ |
 | Know its attributes | Product |
@@ -72,10 +72,17 @@ The Recycling Guidance class provides the user with the guidance based on the pr
 | Handle mixed materials |  |
 
 ## Impact Calculator - service
-The Impact Calculator calculates the environmental impact of a product based on its material. It knows the composition of a product.
+The Impact Calculator calculates the environmental impact of a product based on its material. Calculations happen through implementing one of the two calculation strategies. It knows the composition of a product.
 | Responsibility | Collaborators |
 | :------------- | :------------ |
 | Calculate environmental impact | Product |
+
+## Product Manager
+The product manager manages information about the Product class.
+| Responsibility | Collaborators |
+| :------------- | :------------ |
+| List all products | Product |
+| Show details on products | Menu |
 
 <!-- ## Database Manager - entity
 | Responsibility | Collaborators |
@@ -84,10 +91,11 @@ The Impact Calculator calculates the environmental impact of a product based on 
 | Fetch from database |  |
 | Store in database |  | -->
 
-<!-- ## Menu (entity)
+## Menu (entity)
+The Menu handles user's options and forwards the instructions to the Product Manager.
 | Responsibility | Collaborators |
 | :------------- | :------------ |
-| Store menu options | Products |
+| Store menu options | Product Manager |
 | Display menu options |  |
 | Handle user input |  | -->
 
