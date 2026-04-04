@@ -92,13 +92,16 @@ The Impact Calculator calculates the environmental impact of a product based on 
 | Handle user input |  | -->
 
 # UML Class Diagram
-```puml
+´´´puml
 @startuml diagram
 
 class RecyclingGuidance {
 
 }
-
+class ProductManager {
+    - listProduct()
+    - showDetailedInfo()
+ }
 class Product {
     - name : String
     - category : Category
@@ -138,12 +141,13 @@ interface ImpactCalculator {
 Product "*" *-- "*" Material
 Product <-- RecyclingGuidance : curates from
 Product --> ImpactCalculator : uses
-Menu --> Product : uses
+Menu --> ProductManager : uses
+ProductManager --> Product : uses
 ' DatabaseManager <-- Product : uses
 ' DatabaseManager <-- Material : uses
 ' Menu --> RecyclingGuidance : uses
-firstCalculatorStrategy -->  ImpactCalculator : implements
-secondCalculatorStrategy implements impactCalculator
+firstCalculatorStrategy <--  ImpactCalculator : implements
+secondCalculatorStrategy <-- ImpactCalculator : implements
 @enduml diagram
 ```
 
