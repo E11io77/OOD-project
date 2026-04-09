@@ -93,14 +93,28 @@ The Impact Calculator calculates the environmental impact of a product based on 
 
 # UML Class Diagram
 ```puml
-@startuml diagram
+@startuml
 
-class RecyclingGuidance {
+class Menu {
+    - appService : AppService
+}
+
+class AppService {
+    + evaluateProductImpact(product: Product, strategy: Calculate) : double
+    + fetchRecyclingGuidance(product: Product)
+}
+
+interface Calculate {
+    + calculate(p: Product) : double
+}
+
+class SimpleImpactStrategy {
+    + calculate(p: Product) : double
 }
 
 class Product {
     - name : String
-    - category : Category
+    - category : String
     - estimatedLifespan : Integer
     - materials : List<Material>
 }
@@ -111,17 +125,18 @@ class Material {
     - recyclingGuidance : List<String>
 }
 
-class ImpactCalculator {
+class RecyclingGuidance {
+    + fetchGuidance(p: Product) : List<String>
 }
 
-class Category {
-    - name : String
-}
+Menu --> AppService
+AppService --> Product
+AppService --> RecyclingGuidance
+AppService --> Calculate
 
-Product --> "1" Category
+Calculate <|.. SimpleImpactStrategy
+
 Product *-- "1..*" Material
-RecyclingGuidance --> Product : derives guidance for
-ImpactCalculator --> Product : calculates for
 
 @enduml diagram
 ```
