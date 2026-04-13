@@ -35,39 +35,35 @@ DATABASE MANAGER (entity)
 
 # CRC Cards
 
-## Products - value
-The Product class is responsible for storing information about itself such as name, category, estimated lifespan and its materials. The Product knows its attributes. The Product makes its composition available for the Environmental Impact Calculator and Recycling Guidance.
+## Product Service - service
+The Product Service class is responsible for providing functionality concerning the product to the user. It knows about the product and its composition.
+| Responsibility | Collaborators |
+| :------------- | :------------ |
+| Know the product composition | Impact Calculator |
+| Fetch detailed information about any product | Product |
+| Have access to the database | |
+| Expose product composition for Impact Calculator | |
 
+## Product - value
+The Product class is responsible for storing information about itself such as name, category, estimated lifespan and its materials. The Product knows its attributes. The Product makes its composition available for the Environmental Impact Calculator and Recycling Guidance.
 | Responsibility | Collaborators |
 | :------------- | :------------ |
 | Know its attributes | Materials |
 | Hold list of materials | Environmental Impact Calculator |
 | Expose composition for Environmental Impact Calculator | Recycling Guidance |
-|  | Category |
-|  |  |
 
-## Materials - value
+## Material - value
 The Material class is responsible for storing information about itself such as name and recycling guidance. The Material knows its attributes. The Material makes its composition available for the Product.
 | Responsibility | Collaborators |
 | :------------- | :------------ |
 | Know its attributes | Product |
 | Be reusable across products |  |
 
-## Special Recycling Category - value
-The Special Recycling Category class is responsible for storing information about itself such as name and recycling guidance. The Special Recycling Category knows its attributes. The Special Recycling Category makes its composition available for the Product.
-| Responsibility | Collaborators |
-| :------------- | :------------ |
-| Know its attributes | Product |
-| Be reusable across products |  |
-
-## *Recycling Guidance - service
+## Recycling Guidance - service
 The Recycling Guidance class provides the user with the guidance based on the product’s material or category. Based on the materials and it receives a proper guidance from the database through Product.
-
-
 | Responsibility | Collaborators |
 | :------------- | :------------ |
 | Identify the material(s) of a product | Product |
-| Identify the category of a product | |
 | Curate recycling guidance |  |
 | Handle mixed materials |  |
 
@@ -77,6 +73,8 @@ The Impact Calculator calculates the environmental impact of a product based on 
 | :------------- | :------------ |
 | Calculate environmental impact | Product |
 
+
+
 <!-- ## Database Manager - entity
 | Responsibility | Collaborators |
 | :------------- | :------------ |
@@ -84,12 +82,12 @@ The Impact Calculator calculates the environmental impact of a product based on 
 | Fetch from database |  |
 | Store in database |  | -->
 
-<!-- ## Menu (entity)
+## Menu (entity)
 | Responsibility | Collaborators |
 | :------------- | :------------ |
 | Store menu options | Products |
 | Display menu options |  |
-| Handle user input |  | -->
+| Handle user input |  |
 
 # UML Class Diagram
 ```puml
