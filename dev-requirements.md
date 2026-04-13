@@ -68,7 +68,7 @@ The Recycling Guidance class provides the user with the guidance based on the pr
 | Handle mixed materials |  |
 
 ## Impact Calculator - service
-The Impact Calculator calculates the environmental impact of a product based on its material. It knows the composition of a product.
+The Impact Calculator calculates the environmental impact of a product based on its material. It uses the composition of a product to calculate the environmental impact.
 | Responsibility | Collaborators |
 | :------------- | :------------ |
 | Calculate environmental impact | Product |
@@ -91,54 +91,53 @@ The Impact Calculator calculates the environmental impact of a product based on 
 
 # UML Class Diagram
 ```puml
-@startuml diagram
+@startuml
 
-class RecyclingGuidance {
+class Menu {
+    - appService : AppService
+}
 
+class AppService {
+    + evaluateProductImpact(product: Product, strategy: Calculate) : double
+    + fetchRecyclingGuidance(product: Product)
+}
+
+interface Calculate {
+    + calculate(p: Product) : double
+}
+
+class SimpleImpactStrategy {
+    + calculate(p: Product) : double
 }
 
 class Product {
     - name : String
-    - category : Category
+    - category : String
     - estimatedLifespan : Integer
-    - material : List<Material>
+    - materials : List<Material>
 }
 
 class Material {
     - name : String
+    - impactValue : double
     - recyclingGuidance : List<String>
 }
 
-class ImpactCalculator {
-
+class RecyclingGuidance {
+    + fetchGuidance(p: Product) : List<String>
 }
 
-class Category {
-    - name : String
-    - recyclingGuidance : List<String>
-}
+Menu --> AppService
+AppService --> Product
+AppService --> RecyclingGuidance
+AppService --> Calculate
 
-' class DatabaseManager {
-'     - username : String
-'     - password : String
-' }
-' 
-' class Menu {
-'     - menuOptions : List<String>
-' }
+Calculate <|.. SimpleImpactStrategy
 
-Product "*" *-- "1" Category
-Product "*" *-- "*" Material
-Product <-- RecyclingGuidance : curates from
-Product --> ImpactCalculator : uses
-' Menu --> Product : uses
-' DatabaseManager <-- Product : uses
-' DatabaseManager <-- Material : uses
-' Menu --> RecyclingGuidance : uses
+Product *-- "1..*" Material
 
 @enduml diagram
 ```
-
 # Git Commands
 `git clone`<br>
 `git clone https://github.com/flavio-colangelo/ood-project`<br>
