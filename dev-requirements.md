@@ -45,8 +45,6 @@ The Product Service class is responsible for providing functionality concerning 
 | Expose product composition for Impact Calculator | |
 
 ## Product - value
-The Product class is responsible for storing information about itself such as name, category, estimated lifespan and its materials. The Product knows its attributes. The Product makes its composition available for the Environmental Impact Calculator and Recycling Guidance.
-## Product - value
 The Product class is responsible for storing its attributes such as name, category, estimated lifespan, and materials. It provides access to its materials for the Environmental Impact Calculator and Recycling Guidance.
 
 | Responsibility | Collaborators |
@@ -62,14 +60,7 @@ The material class is responsible for storing information about itself such as n
 | Know its attributes | Product |
 | Be reusable across Product |  |
 
-## Special Recycling Category - value
-The Special Recycling Category class is responsible for storing information about itself such as name and recycling guidance. The Special Recycling Category knows its attributes. The Special Recycling Category makes its composition available for the Product.
-| Responsibility | Collaborators |
-| :------------- | :------------ |
-| Know its attributes | Product |
-| Be reusable across products |  |
-
-## *Recycling Guidance - service
+## Recycling Guidance Service - service
 The Recycling Guidance class provides the user with the guidance based on the product’s material or category. Based on the materials and it receives a proper guidance from the database through Product.
 | Responsibility | Collaborators |
 | :------------- | :------------ |
@@ -95,7 +86,7 @@ The Impact Calculator calculates the environmental impact of a product based on 
 ## Menu - entity
 | Responsibility | Collaborators |
 | :------------- | :------------ |
-| Store menu options | Products |
+| Store menu options | Product |
 | Display menu options |  |
 | Handle user input |  |
 
