@@ -35,54 +35,46 @@ DATABASE MANAGER (entity)
 
 # CRC Cards
 
-## Products - value
-The Product class is responsible for storing information about itself such as name, category, estimated lifespan and its materials. The Product knows its attributes. The Product makes its composition available for the Environmental Impact Calculator and Recycling Guidance.
+## Product Service - service
+The Product Service class is responsible for providing functionality concerning the product to the user. It knows about the product and its composition.
+| Responsibility | Collaborators |
+| :------------- | :------------ |
+| Know the product composition | Environmental Impact Calculator |
+| Fetch detailed information about any product | Product |
+| Have access to the database | |
+| Expose product composition for Environmental Impact Calculator | |
+
+## Product - value
+The Product class is responsible for storing its attributes such as name, category, estimated lifespan, and materials. It provides access to its materials for the Environmental Impact Calculator and Recycling Guidance Service.
 
 | Responsibility | Collaborators |
 | :------------- | :------------ |
-| Know its attributes | Materials |
+| Know its attributes | Material |
 | Hold list of materials | Environmental Impact Calculator |
-| Expose composition for Environmental Impact Calculator | Recycling Guidance |
-|  | Category |
-|  |  |
+| Expose composition for Environmental Impact Calculator | Recycling Guidance Service |
 
-## Materials - value
-The Material class is responsible for storing information about itself such as name, recycling guidance and impact value. The Material knows its attributes. The Material makes its composition available for the Product.
+## Material - value
+The material class is responsible for storing information about itself such as name and recycling guidance. The material knows its attributes. The material makes its composition available for the Product.
 | Responsibility | Collaborators |
 | :------------- | :------------ |
 | Know its attributes | Product |
-| Be reusable across products |  |
+| Be reusable across Product |  |
 
-## Special Recycling Category - value
-The Special Recycling Category class is responsible for storing information about itself such as name and recycling guidance. The Special Recycling Category knows its attributes. The Special Recycling Category makes its composition available for the Product.
+## Recycling Guidance Service - service
+The Recycling Guidance ervice provides the user with the guidance based on the product’s material or category. Based on the materials and it receives a proper guidance from the database through Product.
 | Responsibility | Collaborators |
 | :------------- | :------------ |
-| Know its attributes | Product |
-| Be reusable across products |  |
-
-## *Recycling Guidance - service
-The Recycling Guidance class provides the user with the guidance based on the product’s material or category. Based on the materials and it receives a proper guidance from the database through Product.
-
-
-| Responsibility | Collaborators |
-| :------------- | :------------ |
-| Identify the material(s) of a product | Product |
-| Identify the category of a product | |
+| Identify the material(s) of a product | Product | | |
 | Curate recycling guidance |  |
 | Handle mixed materials |  |
 
-## Impact Calculator - service
-The Impact Calculator calculates the environmental impact of a product based on its material. Calculations happen through implementing one of the two calculation strategies. It knows the composition of a product.
+## Environmental Impact Calculator - service
+The Environmental Impact Calculator calculates the environmental impact of a product based on its material. It uses the composition of a product to calculate the environmental impact.
 | Responsibility | Collaborators |
 | :------------- | :------------ |
 | Calculate environmental impact | Product |
 
-## Product Manager
-The product manager manages information about the Product class.
-| Responsibility | Collaborators |
-| :------------- | :------------ |
-| List all products | Product |
-| Show details on products | Menu |
+
 
 <!-- ## Database Manager - entity
 | Responsibility | Collaborators |
@@ -91,20 +83,32 @@ The product manager manages information about the Product class.
 | Fetch from database |  |
 | Store in database |  | -->
 
-## Menu (entity)
-The Menu handles user's options and forwards the instructions to the Product Manager.
+## Menu - entity
 | Responsibility | Collaborators |
 | :------------- | :------------ |
-| Store menu options | Product Manager |
+| Store menu options | Product |
 | Display menu options |  |
-| Handle user input |  | -->
+| Handle user input |  |
 
 # UML Class Diagram
-´´´puml
-@startuml diagram
+```puml
+@startuml
 
-class RecyclingGuidance {
+class Menu {
+    - appService : AppService
+}
 
+class AppService {
+    + evaluateProductImpact(product: Product, strategy: Calculate) : double
+    + fetchRecyclingGuidance(product: Product)
+}
+
+interface Calculate {
+    + calculate(p: Product) : double
+}
+
+class SimpleImpactStrategy {
+    + calculate(p: Product) : double
 }
 class ProductManager {
     - listProduct()
@@ -112,53 +116,33 @@ class ProductManager {
  }
 class Product {
     - name : String
-    - category : Category
+    - category : String
     - estimatedLifespan : Integer
-    - material : List<Material>
-    - impactCalculator : ImpactCalculator
+    - materials : List<Material>
 }
 
 class Material {
     - name : String
+    - impactValue : double
     - recyclingGuidance : List<String>
     - impactValue : Integer
 }
 
-interface ImpactCalculator {
-
+class RecyclingGuidance {
+    + fetchGuidance(p: Product) : List<String>
 }
 
+Menu --> AppService
+AppService --> Product
+AppService --> RecyclingGuidance
+AppService --> Calculate
 
-' class DatabaseManager {
-'     - username : String
-'     - password : String
-' }
-' 
- class Menu {
-     - menuOptions : List<String>
- }
+Calculate <|.. SimpleImpactStrategy
 
- class firstCalculatorStrategy {
+Product *-- "1..*" Material
 
- }
-
- class secondCalculatorStrategy {
-
- }
-
-Product "*" *-- "*" Material
-Product <-- RecyclingGuidance : curates from
-Product --> ImpactCalculator : uses
-Menu --> ProductManager : uses
-ProductManager --> Product : uses
-' DatabaseManager <-- Product : uses
-' DatabaseManager <-- Material : uses
-' Menu --> RecyclingGuidance : uses
-firstCalculatorStrategy <--  ImpactCalculator : implements
-secondCalculatorStrategy <-- ImpactCalculator : implements
 @enduml diagram
 ```
-
 # Git Commands
 `git clone`<br>
 `git clone https://github.com/flavio-colangelo/ood-project`<br>
@@ -175,4 +159,5 @@ feature/addProducts<br>
 `git pull branch` <br>
 `git branch`<br>
 `git branch -d nameOfTheBranch`
+`git merge nameOfBranch`
 `git fetch origin development`
