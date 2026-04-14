@@ -94,7 +94,7 @@ The Environmental Impact Calculator calculates the environmental impact of a pro
 ```puml
 @startuml
 class Menu {
-  - appService: AppService
+  - productService: ProductService
   - guidanceService: RecyclingGuidanceService
   + startLoop(): void
   - displayOptions(): void
@@ -102,8 +102,8 @@ class Menu {
 }
 
 class ProductService {
-  + createProduct(product: Product): void
-  + fetchProduct(product: Product): Product
+  + createProduct(): void
+  + fetchProduct(name: String): Product
   + listProducts(): List<Product>
 }
 
@@ -119,7 +119,7 @@ class SimpleSumStrategy {
   + calculate(p: Product): double
 }
 
-class Product {
+class Product extends ProductRepository {
   - name: String
   - category: String
   - estimatedLifespan: Integer
@@ -137,6 +137,18 @@ class RecyclingGuidanceService {
   + fetchGuidance(p: Product): List<String>
 }
 
+abstract class ProductRepository {
+  + createProduct(): void
+  + readProduct(name: String): Product
+  + updateProduct(attribute: String, value: String): void
+  + deleteProduct(): void
+  + fetchAll(): List<Product>
+}
+
+class DatabaseManager {
+  
+}
+
 
 Menu --> ProductService : calls
 Menu --> RecyclingGuidanceService : calls
@@ -151,6 +163,8 @@ EnvironmentalImpactCalculator <|.. WeightedByLifespanStrategy : implements
 EnvironmentalImpactCalculator ..> Product : analyzes
 
 Product "*" o-- "*" Material : contains
+
+ProductRepository --> DatabaseManager : calls
 @enduml
 ```
 # Package Structure
