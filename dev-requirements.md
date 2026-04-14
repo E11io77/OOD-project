@@ -146,6 +146,7 @@ ProductService --> Product : fetches
 RecyclingGuidanceService --> Product : fetches
 
 EnvironmentalImpactCalculator <|.. SimpleSumStrategy : implements
+EnvironmentalImpactCalculator <|.. WeightedByLifespanStrategy : implements
 
 EnvironmentalImpactCalculator ..> Product : analyzes
 
