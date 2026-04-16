@@ -97,14 +97,22 @@ class Menu {
   - productService: ProductService
   - guidanceService: RecyclingGuidanceService
   + startLoop(): void
-  - displayOptions(): void
-  - handleUserInput(): void
+  # displayOptions(): void
+  # handleUserInput(): void
 }
 
 class ProductService {
-  + createProduct(): void
+  + createProduct(String ... args): Product
   + fetchProduct(name: String): Product
   + listProducts(): List<Product>
+  + recyclingGuidance(p: Product): List<Strings>
+  + enviromentalImpact(p: Product): double
+  + enviromentalImpact(p: Product, Weighted: bool): double
+}
+
+class MaterialService {
+  + createMaterial(String ... args): void
+  + fetchMaterial(name: String): material
 }
 
 interface EnvironmentalImpactCalculator {
@@ -119,7 +127,7 @@ class SimpleSumStrategy {
   + calculate(p: Product): double
 }
 
-class Product extends ProductRepository {
+class Product implements ProductRepository{
   - name: String
   - category: String
   - estimatedLifespan: Integer
@@ -127,7 +135,7 @@ class Product extends ProductRepository {
   + getMaterials(): List<Material>
 }
 
-class Material {
+class Material implements MaterialRepository{
   - name: String
   - impactValue: Integer
   - recyclingGuidance: List<String>
@@ -137,12 +145,28 @@ class RecyclingGuidanceService {
   + fetchGuidance(p: Product): List<String>
 }
 
+interface Repository {
+  + create(): void
+  + read(name: String): Object
+  + update(attribute: String, value: String): void
+  + delete():void
+  + fetchAll(): List<Object>
+}
+
 abstract class ProductRepository {
-  + createProduct(): void
-  + readProduct(name: String): Product
-  + updateProduct(attribute: String, value: String): void
-  + deleteProduct(): void
+  + create(): void
+  + read(name: String): Product
+  + update(attribute: String, value: String): void
+  + delete(): void
   + fetchAll(): List<Product>
+}
+
+abstract class MaterialRepository {
+  + create(): void
+  + read(name: String): Material
+  + update(attribute: String, value: String): void
+  + delete(): void
+  + fetchAll(): List<Material>
 }
 
 class DatabaseManager {
@@ -151,10 +175,14 @@ class DatabaseManager {
 
 
 Menu --> ProductService : calls
-Menu --> RecyclingGuidanceService : calls
-Menu --> EnvironmentalImpactCalculator : calls
+Menu --> MaterialService : calls
 
-ProductService --> Product : fetches
+ProductService --> Product : call
+ProductService --> RecyclingGuidanceService : calls
+ProductService --> EnvironmentalImpactCalculator : calls
+
+MaterialService --> Material : fetches
+
 RecyclingGuidanceService --> Product : fetches
 
 EnvironmentalImpactCalculator <|.. SimpleSumStrategy : implements
@@ -162,8 +190,12 @@ EnvironmentalImpactCalculator <|.. WeightedByLifespanStrategy : implements
 
 EnvironmentalImpactCalculator ..> Product : analyzes
 
+Repository <|.. ProductRepository : implements
+Repository <|.. MaterialRepository : implements
+
 Product "*" o-- "*" Material : contains
 
+MaterialRepository --> DatabaseManager : calls
 ProductRepository --> DatabaseManager : calls
 @enduml
 ```
