@@ -1,0 +1,80 @@
+{
+  "materials": [
+    {
+      "name": "PET plast",
+      "recyclingCategory": "PLASTIC",
+      "recyclingGuidance": [
+        "Rinse - no greasy packaging permitted.",
+        "Compress the objects to save space.",
+        "Dispose into the plastic trash container."
+      ]
+    },
+    {
+      "name": "Aluminium",
+      "recyclingCategory": "METAL",
+      "recyclingGuidance": [
+        "Rinse - no greasy packaging permitted.",
+        "Compress the object if possible.",
+        "Place in the metal recycling bin."
+      ]
+    },
+    {
+      "name": "Cardboard",
+      "recyclingCategory": "CARDBOARD",
+      "recyclingGuidance": [
+        "Fold flat.",
+        "Place in the paper packaging recycling bin.",
+        "Shall not be greasy nor moist."
+      ]
+    },
+    {
+      "name": "Glass",
+      "recyclingCategory": "GLASS",
+      "recyclingGuidance": [
+        "Seperate the metal lid and recycle accordingly.",
+        "Place in the glass recycling bin.",
+        "No porcelain nor mirror glass."
+      ]
+    },
+    {
+      "name": "Organic material",
+      "recyclingCategory": "BIO_WASTE",
+      "recyclingGuidance": [
+        "Dispose in the food waste container.",
+        "No oil permitted."
+      ]
+    }
+  ],
+  "products": [
+    {
+      "name": "PET bottle",
+      "category": "Beverage container",
+      "estimatedLifeSpan": 1,
+      "materialNames": ["PET plast"]
+    },
+    {
+      "name": "Aluminium can",
+      "category": "Food container",
+      "estimatedLifeSpan": 1,
+      "materialNames": ["Aluminium"]
+    },
+    {
+      "name": "Shoe box",
+      "category": "Packaging",
+      "estimatedLifeSpan": 2,
+      "materialNames": ["Cardboard"]
+    },
+    {
+      "name": "Glass jar",
+      "category": "Food container",
+      "estimatedLifeSpan": 10,
+      "materialNames": ["Glass"]
+    },
+    {
+      "name": "Apple",
+      "category": "Food",
+      "estimatedLifeSpan": 1,
+      "materialNames": ["Organic material"]
+    }
+  ]
+}
