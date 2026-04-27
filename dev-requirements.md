@@ -91,28 +91,34 @@ The Environmental Impact Calculator calculates the environmental impact of a pro
 | Handle user input |  |
 
 # UML Class Diagram
-```puml
-@startuml
+```@startuml
 class Menu {
   - productService: ProductService
-  - guidanceService: RecyclingGuidanceService
   + startLoop(): void
-  # displayOptions(): void
-  # handleUserInput(): void
+  # displayMainMenu(): void
+  # handleProductMenu(): void
+  # handleMaterialMenu(): void
+  # handleImpactMenu(): void
+  # handleRecyclingMenu(): void
+  # handleUserInput(input: String): void
 }
 
 class ProductService {
+  - products: List<Product>
+  - materialService: MaterialService
   + createProduct(String ... args): Product
   + fetchProduct(name: String): Product
   + listProducts(): List<Product>
   + recyclingGuidance(p: Product): List<Strings>
-  + enviromentalImpact(p: Product): double
-  + enviromentalImpact(p: Product, Weighted: bool): double
+  + environmentalImpact(p: Product): double
+  + environmentalImpact(p: Product, Weighted: boolean): double
 }
 
 class MaterialService {
+  - materials: List <Material>
   + createMaterial(String ... args): void
-  + fetchMaterial(name: String): material
+  + fetchMaterial(name: String): Material
+  + listMaterials(): List<Material>
 }
 
 interface EnvironmentalImpactCalculator {
@@ -127,61 +133,44 @@ class SimpleSumStrategy {
   + calculate(p: Product): double
 }
 
-class Product implements ProductRepository{
+class Product{
   - name: String
   - category: String
   - estimatedLifespan: Integer
   - materials: List<Material>
   + getMaterials(): List<Material>
+  + getName(): String
+  + getCategory(): String
+  + getEstimatedLifeSpan(): Integer
 }
 
-class Material implements MaterialRepository{
+class Material{
   - name: String
-  - impactValue: Integer
+  - impactValue: double
   - recyclingGuidance: List<String>
+  - recyclingCategory: RecyclingCategory
+  + getName(): String
+  + getImpactValue(): double
+  + getRecyclingGuidance(): List<String>
 }
 
 class RecyclingGuidanceService {
   + fetchGuidance(p: Product): List<String>
 }
 
-interface Repository {
-  + create(): void
-  + read(name: String): Object
-  + update(attribute: String, value: String): void
-  + delete():void
-  + fetchAll(): List<Object>
-}
+class RecyclingCategory {
 
-abstract class ProductRepository {
-  + create(): void
-  + read(name: String): Product
-  + update(attribute: String, value: String): void
-  + delete(): void
-  + fetchAll(): List<Product>
 }
-
-abstract class MaterialRepository {
-  + create(): void
-  + read(name: String): Material
-  + update(attribute: String, value: String): void
-  + delete(): void
-  + fetchAll(): List<Material>
-}
-
-class DatabaseManager {
-  
-}
-
 
 Menu --> ProductService : calls
-Menu --> MaterialService : calls
 
 ProductService --> Product : call
 ProductService --> RecyclingGuidanceService : calls
 ProductService --> EnvironmentalImpactCalculator : calls
+ProductService --> MaterialService : uses
 
-MaterialService --> Material : fetches
+MaterialService --> Material : manages
+Material --> RecyclingCategory : has
 
 RecyclingGuidanceService --> Product : fetches
 
@@ -190,13 +179,7 @@ EnvironmentalImpactCalculator <|.. WeightedByLifespanStrategy : implements
 
 EnvironmentalImpactCalculator ..> Product : analyzes
 
-Repository <|.. ProductRepository : implements
-Repository <|.. MaterialRepository : implements
-
 Product "*" o-- "*" Material : contains
-
-MaterialRepository --> DatabaseManager : calls
-ProductRepository --> DatabaseManager : calls
 @enduml
 ```
 # Package Structure
