@@ -1,4 +1,4 @@
-@startuml
+@startuml Diagram
 
 package "infrastructure" {
     class Main {
