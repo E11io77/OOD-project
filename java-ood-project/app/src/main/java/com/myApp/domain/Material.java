@@ -6,11 +6,20 @@ public class Material {
     private RecyclingCategory recyclingCategory;
     private List<String> recyclingGuidance;
 
-    public String getName() { return name; }
-    public RecyclingCategory getRecyclingCategory() { return recyclingCategory; }
-    public List<String> getRecyclingGuidance() { return recyclingGuidance; }
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) { this.name = name; }
-    public void setRecyclingCategory(RecyclingCategory recyclingCategory) { this.recyclingCategory = recyclingCategory; }
-    public void setRecyclingGuidance(List<String> recyclingGuidance) { this.recyclingGuidance = recyclingGuidance; }
+    public RecyclingCategory getRecyclingCategory() {
+        return recyclingCategory;
+    }
+    public List<String> getRecyclingGuidance() {
+        return recyclingGuidance;
+    }
+
+    public Material(String name, RecyclingCategory RecyclingCategory, List<String> RecyclingGuidance) {
+        this.name = name;
+        this.recyclingCategory = RecyclingCategory;
+        this.recyclingGuidance = RecyclingGuidance;
+    }    
 }

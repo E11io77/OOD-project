@@ -13,8 +13,16 @@ public class Product {
         this.materials = materials;
     }
 
-    public String getName() { return name; }
-    public String getCategory() { return category; }
-    public int getEstimatedLifeSpan() { return estimatedLifeSpan; }
-    public List<Material> getMaterials() { return materials; }
+    public String getName() {
+        return name;
+    }
+    public String getCategory() {
+        return category;
+    }
+    public int getEstimatedLifeSpan() {
+        return estimatedLifeSpan;
+    }
+    public List<Material> getMaterials() {
+        return materials;
+    }
 }
