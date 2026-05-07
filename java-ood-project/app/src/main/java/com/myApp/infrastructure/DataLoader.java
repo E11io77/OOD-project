@@ -34,7 +34,6 @@ public class DataLoader {
                      LocalProductRepository productRepository) {
         try {
             DataWrapper data = objectMapper.readValue(new File(filePath), DataWrapper.class);
-
             for (MaterialData md : data.materials) {
                 Material material = new Material(md.name, md.recyclingCategory, md.recyclingGuidance);
                 materialRepository.addMaterial(material);

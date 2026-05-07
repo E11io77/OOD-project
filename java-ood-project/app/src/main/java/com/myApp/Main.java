@@ -1,0 +1,35 @@
+package com.myApp;
+
+import java.util.Scanner;
+
+import com.myApp.application.MaterialService;
+import com.myApp.application.ProductService;
+import com.myApp.domain.LocalMaterialRepository;
+import com.myApp.domain.LocalProductRepository;
+import com.myApp.presentation.MainMenu;
+import com.myApp.presentation.MaterialMenu;
+import com.myApp.presentation.ProductMenu;
+import com.myApp.infrastructure.DataLoader;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Working directory: " + System.getProperty("user.dir"));
+
+        LocalMaterialRepository materialRepository = new LocalMaterialRepository();
+        LocalProductRepository productRepository = new LocalProductRepository();
+        
+        MaterialService materialService = new MaterialService(materialRepository);
+        ProductService productService = new ProductService(productRepository);
+
+        DataLoader dataLoader = new DataLoader();
+        dataLoader.load("java-ood-project/app/src/main/resources/data.json", materialRepository, productRepository);
+
+        Scanner scanner = new Scanner(System.in);
+        ProductMenu productMenu = new ProductMenu(scanner, productService);
+        MaterialMenu materialMenu = new MaterialMenu(scanner, materialService);
+
+        MainMenu mainMenu = new MainMenu(scanner, productMenu, materialMenu);
+        mainMenu.start();
+        scanner.close();
+    }
+}
