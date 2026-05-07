@@ -20,6 +20,7 @@ public class DataLoader {
         public String name;
         public RecyclingCategory recyclingCategory;
         public List<String> recyclingGuidance;
+        public double environmentalImpactValue;
     }
 
     private static class ProductData {
@@ -35,7 +36,7 @@ public class DataLoader {
         try {
             DataWrapper data = objectMapper.readValue(new File(filePath), DataWrapper.class);
             for (MaterialData md : data.materials) {
-                Material material = new Material(md.name, md.recyclingCategory, md.recyclingGuidance);
+                Material material = new Material(md.name, md.recyclingCategory, md.recyclingGuidance, md.environmentalImpactValue);
                 materialRepository.addMaterial(material);
             }
 

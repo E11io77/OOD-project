@@ -5,6 +5,7 @@ public class Material {
     private String name;
     private RecyclingCategory recyclingCategory;
     private List<String> recyclingGuidance;
+    private double environmentalImpactValue;
 
     public String getName() {
         return name;
@@ -17,9 +18,14 @@ public class Material {
         return recyclingGuidance;
     }
 
-    public Material(String name, RecyclingCategory RecyclingCategory, List<String> RecyclingGuidance) {
+    public double environmentalImpactValue () {
+        return environmentalImpactValue;
+    }
+
+    public Material(String name, RecyclingCategory RecyclingCategory, List<String> RecyclingGuidance, double eenvironmentalImpactValue) {
         this.name = name;
         this.recyclingCategory = RecyclingCategory;
         this.recyclingGuidance = RecyclingGuidance;
+        this.environmentalImpactValue = environmentalImpactValue;
     }    
 }
