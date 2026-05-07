@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.myApp.application.MaterialService;
 import com.myApp.application.ProductService;
+import com.myApp.application.RecyclingGuidanceService;
 import com.myApp.domain.LocalMaterialRepository;
 import com.myApp.domain.LocalProductRepository;
 import com.myApp.presentation.MainMenu;
@@ -25,7 +26,8 @@ public class Main {
         dataLoader.load("java-ood-project/app/src/main/resources/data.json", materialRepository, productRepository);
 
         Scanner scanner = new Scanner(System.in);
-        ProductMenu productMenu = new ProductMenu(scanner, productService, null);
+        RecyclingGuidanceService recyclingGuidanceService = new RecyclingGuidanceService();
+        ProductMenu productMenu = new ProductMenu(scanner, productService, recyclingGuidanceService);
         MaterialMenu materialMenu = new MaterialMenu(scanner, materialService);
 
         MainMenu mainMenu = new MainMenu(scanner, productMenu, materialMenu);
