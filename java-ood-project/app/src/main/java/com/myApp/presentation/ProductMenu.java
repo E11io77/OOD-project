@@ -1,5 +1,6 @@
 package com.myApp.presentation;
 import com.myApp.application.ProductService;
+import com.myApp.application.RecyclingGuidanceService;
 import com.myApp.domain.Material;
 import com.myApp.domain.Product;
 import java.util.List;
@@ -66,7 +67,7 @@ public class ProductMenu {
         String choice = scanner.nextLine();
 
         if (choice.equalsIgnoreCase("A")) {
-            System.out.println("pass");
+            System.out.println("Work in progress");
             return null;
         }
 
@@ -106,16 +107,11 @@ public class ProductMenu {
     }
     
     private void showRecyclingInstructions(Product product) {
+        String guidance = RecyclingGuidanceService.getGuidance (product)
         System.out.println("\n--- Recycling Instructions for " + product.getName() + " ---");
 
         for (Material material : product.getMaterials()) {
-            System.out.println("\nMaterial: " + material.getName() 
-                               + " (" + material.getRecyclingCategory() + ")");
-            System.out.println("Instructions:");
-
-            for (String instruction : material.getRecyclingGuidance()) {
-                System.out.println("  - " + instruction);
-            }
+        System.out.println(guidance);
         }
     }
 
