@@ -11,6 +11,7 @@ public class ProductMenu {
     public ProductMenu(Scanner scanner, ProductService productService, RecyclingGuidanceService recyclingGuidanceService) {
                 this.scanner = scanner;
                 this.productService = productService;
+                this.recyclingGuidanceService = recyclingGuidanceService;
     }
     public void show() {
         boolean inMenu = true;
