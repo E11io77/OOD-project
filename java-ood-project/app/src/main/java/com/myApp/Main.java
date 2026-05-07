@@ -25,7 +25,7 @@ public class Main {
         dataLoader.load("java-ood-project/app/src/main/resources/data.json", materialRepository, productRepository);
 
         Scanner scanner = new Scanner(System.in);
-        ProductMenu productMenu = new ProductMenu(scanner, productService);
+        ProductMenu productMenu = new ProductMenu(scanner, productService, null);
         MaterialMenu materialMenu = new MaterialMenu(scanner, materialService);
 
         MainMenu mainMenu = new MainMenu(scanner, productMenu, materialMenu);

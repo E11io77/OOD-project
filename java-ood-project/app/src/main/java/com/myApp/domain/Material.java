@@ -22,7 +22,7 @@ public class Material {
         return environmentalImpactValue;
     }
 
-    public Material(String name, RecyclingCategory RecyclingCategory, List<String> RecyclingGuidance, double eenvironmentalImpactValue) {
+    public Material(String name, RecyclingCategory RecyclingCategory, List<String> RecyclingGuidance, double environmentalImpactValue) {
         this.name = name;
         this.recyclingCategory = RecyclingCategory;
         this.recyclingGuidance = RecyclingGuidance;

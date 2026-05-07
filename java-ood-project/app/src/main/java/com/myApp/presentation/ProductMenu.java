@@ -1,14 +1,14 @@
 package com.myApp.presentation;
 import com.myApp.application.ProductService;
 import com.myApp.application.RecyclingGuidanceService;
-import com.myApp.domain.Material;
 import com.myApp.domain.Product;
 import java.util.List;
 import java.util.Scanner;
 public class ProductMenu {
     private Scanner scanner;
     private ProductService productService;
-    public ProductMenu(Scanner scanner, ProductService productService) {
+    private RecyclingGuidanceService recyclingGuidanceService;
+    public ProductMenu(Scanner scanner, ProductService productService, RecyclingGuidanceService recyclingGuidanceService) {
                 this.scanner = scanner;
                 this.productService = productService;
     }
@@ -107,12 +107,8 @@ public class ProductMenu {
     }
     
     private void showRecyclingInstructions(Product product) {
-        String guidance = RecyclingGuidanceService.getGuidance (product)
+        String guidance = recyclingGuidanceService.getGuidance (product);
         System.out.println("\n--- Recycling Instructions for " + product.getName() + " ---");
-
-        for (Material material : product.getMaterials()) {
         System.out.println(guidance);
         }
     }
-
-}
