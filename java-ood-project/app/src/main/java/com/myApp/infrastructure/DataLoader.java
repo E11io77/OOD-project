@@ -30,8 +30,8 @@ public class DataLoader {
     }
 
     public void load(String filePath,
-                     LocalMaterialRepository materialRepository,
-                     LocalProductRepository productRepository) {
+                    MaterialRepository materialRepository,
+                    ProductRepository productRepository) {
         try {
             DataWrapper data = objectMapper.readValue(new File(filePath), DataWrapper.class);
             for (MaterialData md : data.materials) {
