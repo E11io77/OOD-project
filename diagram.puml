@@ -1,0 +1,156 @@
+@startuml Diagram
+
+package "infrastructure" {
+    class Main {
+        + main(args: String[]): void
+    }
+    class DataLoader {
+        - objectMapper: ObjectMapper
+        + load(filePath: String, materialRepo: InMemoryMaterialRepository, productRepo: InMemoryProductRepository): void
+    }
+}
+
+package "presentation" {
+    class MainMenu {
+        - scanner: Scanner
+        - productMenu: ProductMenu
+        - materialMenu: MaterialMenu
+        + start(): void
+        - printMenu(): void
+    }
+
+    class ProductMenu {
+        - scanner: Scanner
+        - productService: ProductService
+        + show(): void
+        - printMenu(): void
+        - handleProductSelection(): Product
+        - showProductActions(product: Product): void
+        - showRecyclingInstructions(product: Product): void
+    }
+
+    class MaterialMenu {
+        - scanner: Scanner
+        - materialService: MaterialService
+        + show(): void
+        - printMenu(): void
+        - listMaterials(): void
+        - addMaterial(): void
+    }
+}
+
+package "application" {
+    class ProductService {
+        - productRepository: ProductRepository
+        + listProducts(): List<Product>
+        + getProduct(name: String): Optional<Product>
+    }
+
+    class MaterialService {
+        - materialRepository: MaterialRepository
+        + listMaterials(): List<Material>
+        + getMaterial(name: String): Optional<Material>
+    }
+}
+
+package "domain" {
+    interface ProductRepository {
+        + findAll(): List<Product>
+        + findByName(name: String): Optional<Product>
+    }
+
+    interface MaterialRepository {
+        + findAll(): List<Material>
+        + findByName(name: String): Optional<Material>
+    }
+
+    class InMemoryProductRepository {
+        - products: List<Product>
+        + findAll(): List<Product>
+        + findByName(name: String): Optional<Product>
+        + addProduct(product: Product): void
+    }
+
+    class InMemoryMaterialRepository {
+        - materials: List<Material>
+        + findAll(): List<Material>
+        + findByName(name: String): Optional<Material>
+        + addMaterial(material: Material): void
+    }
+
+    class Product {
+        - name: String
+        - category: String
+        - estimatedLifeSpan: Integer
+        - materials: List<Material>
+        + getName(): String
+        + getCategory(): String
+        + getEstimatedLifeSpan(): Integer
+        + getMaterials(): List<Material>
+    }
+
+    class Material {
+        - name: String
+        - impactValue: double
+        - recyclingGuidance: List<String>
+        - recyclingCategory: RecyclingCategory
+        + getName(): String
+        + getImpactValue(): double
+        + getRecyclingGuidance(): List<String>
+        + getRecyclingCategory(): RecyclingCategory
+    }
+
+    interface ImpactCalculator {
+        + calculate(p: Product): double
+    }
+
+    class SimpleSumStrategy {
+        + calculate(p: Product): double
+    }
+
+    class WeightedByLifespanStrategy {
+        + calculate(p: Product): double
+    }
+
+    enum RecyclingCategory {
+        PLASTIC
+        PAPER
+        CARDBOARD
+        GLASS
+        METAL
+        BIO_WASTE
+        ELECTRONIC_WASTE
+        TEXTILES
+    }
+}
+
+Main --> DataLoader : uses
+Main --> MainMenu : creates
+Main --> ProductService : creates
+Main --> MaterialService : creates
+Main --> InMemoryProductRepository : creates
+Main --> InMemoryMaterialRepository : creates
+
+DataLoader --> InMemoryMaterialRepository : fills
+DataLoader --> InMemoryProductRepository : fills
+
+MainMenu --> ProductMenu : delegates to
+MainMenu --> MaterialMenu : delegates to
+
+ProductMenu --> ProductService : calls
+MaterialMenu --> MaterialService : calls
+
+ProductService --> ProductRepository : uses
+MaterialService --> MaterialRepository : uses
+
+ProductRepository <|.. InMemoryProductRepository : implements
+MaterialRepository <|.. InMemoryMaterialRepository : implements
+
+ImpactCalculator <|.. SimpleSumStrategy : implements
+ImpactCalculator <|.. WeightedByLifespanStrategy : implements
+ImpactCalculator ..> Product : analyzes
+
+Product "*" o-- "*" Material : contains
+Material --> RecyclingCategory : has
+
+@enduml
