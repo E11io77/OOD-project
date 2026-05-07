@@ -18,7 +18,7 @@ public class Material {
         return recyclingGuidance;
     }
 
-    public double environmentalImpactValue () {
+    public double getEnvironmentalImpactValue () {
         return environmentalImpactValue;
     }
 
