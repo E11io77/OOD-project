@@ -8,7 +8,8 @@ import java.util.Scanner;
 public class ProductMenu {
     private Scanner scanner;
     private ProductService productService;
-    public ProductMenu(Scanner scanner, ProductService productService) {
+    private RecyclingGuidanceService recyclingGuidanceService;
+    public ProductMenu(Scanner scanner, ProductService productService, RecyclingGuidanceService recyclingGuidanceService) {
                 this.scanner = scanner;
                 this.productService = productService;
     }
@@ -89,7 +90,8 @@ public class ProductMenu {
                 showRecyclingInstructions(product);
                 break;
             case "2":
-                System.out.println("Impact calculation - coming soon!");
+                double impact = productService.calculateImpact(product);
+                System.out.printf("Environmental impact is: %.2f kg CO2%n", impact);
                 break;
             case "b":
                 break;
@@ -107,7 +109,7 @@ public class ProductMenu {
     }
     
     private void showRecyclingInstructions(Product product) {
-        String guidance = RecyclingGuidanceService.getGuidance (product)
+        String guidance = RecyclingGuidanceService.getGuidance(product)
         System.out.println("\n--- Recycling Instructions for " + product.getName() + " ---");
 
         for (Material material : product.getMaterials()) {

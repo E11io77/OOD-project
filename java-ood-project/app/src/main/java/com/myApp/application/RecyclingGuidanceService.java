@@ -4,7 +4,7 @@ import com.myApp.domain.Product;
 
 public class RecyclingGuidanceService {
 
-    public String getGuidance(Product product) {
+    public static String getGuidance(Product product) {
         String result = "";
         for (Material material : product.getMaterials()) {
             result += "\nMaterial: " + material.getName() 
