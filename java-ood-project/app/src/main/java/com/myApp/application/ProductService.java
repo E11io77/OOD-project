@@ -25,4 +25,8 @@ public class ProductService {
     public double calculateImpact (Product product) {
         return impactCalculator.calculate(product);
     }
+
+    public void setImpactCalculator(ImpactCalculator impactCalculator) {
+        this.impactCalculator = impactCalculator;
+    }
 }
