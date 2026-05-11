@@ -1,4 +1,6 @@
 package com.myApp.presentation;
+import com.myApp.domain.SimpleSumStrategy;
+import com.myApp.domain.WeightedByLifespanStrategy;
 import com.myApp.application.ProductService;
 import com.myApp.application.RecyclingGuidanceService;
 import com.myApp.domain.Product;
@@ -8,6 +10,7 @@ public class ProductMenu {
     private Scanner scanner;
     private ProductService productService;
     private RecyclingGuidanceService recyclingGuidanceService;
+
     public ProductMenu(Scanner scanner, ProductService productService, RecyclingGuidanceService recyclingGuidanceService) {
                 this.scanner = scanner;
                 this.productService = productService;
@@ -90,7 +93,7 @@ public class ProductMenu {
                 showRecyclingInstructions(product);
                 break;
             case "2":
-                System.out.println("Impact calculation - coming soon!");
+                chooseImpactStrategy(product);
                 break;
             case "b":
                 break;
@@ -99,6 +102,30 @@ public class ProductMenu {
         }
     }
 
+    private void chooseImpactStrategy(Product product) {
+        System.out.println("\n--- Select Calculation Strategy ---");
+        System.out.println("1. Simple sum (total material impact)");
+        System.out.println("2. Weighted by lifespan (impact per year)");
+        System.out.print("Your choice: ");
+
+        String choice = scanner.nextLine();
+        switch (choice) {
+        case "1":
+            productService.setImpactCalculator(new SimpleSumStrategy());
+            System.out.println("Strategy set: Simple sum");
+            double sumImpact = productService.calculateImpact(product);
+                System.out.printf("Environmental impact is: %.2f kg CO2%n", sumImpact);
+            break;
+        case "2":
+            productService.setImpactCalculator(new WeightedByLifespanStrategy());
+            System.out.println("Strategy set: Weighted by lifespan");
+            double weightedImpact = productService.calculateImpact(product);
+                System.out.printf("Yearly impact is: %.2f kg CO2%n", weightedImpact);
+            break;
+        default:
+            System.out.println("Invalid choice, strategy unchanged.");
+    }
+    }
 
     private void printMenu() {
         System.out.println("\n--- Product Menu ---");
@@ -108,7 +135,7 @@ public class ProductMenu {
     }
     
     private void showRecyclingInstructions(Product product) {
-        String guidance = recyclingGuidanceService.getGuidance (product);
+        String guidance = RecyclingGuidanceService.getGuidance(product);
         System.out.println("\n--- Recycling Instructions for " + product.getName() + " ---");
         System.out.println(guidance);
         }

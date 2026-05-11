@@ -14,7 +14,6 @@ import com.myApp.infrastructure.DataLoader;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Working directory: " + System.getProperty("user.dir"));
 
         LocalMaterialRepository materialRepository = new LocalMaterialRepository();
         LocalProductRepository productRepository = new LocalProductRepository();

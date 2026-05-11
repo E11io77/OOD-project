@@ -18,4 +18,12 @@ public class ProductService {
     public Optional<Product> getProduct(String name) {
         return productRepository.findByName(name);
     }
+
+    public double calculateImpact (Product product) {
+        return impactCalculator.calculate(product);
+    }
+
+    public void setImpactCalculator(ImpactCalculator impactCalculator) {
+        this.impactCalculator = impactCalculator;
+    }
 }
