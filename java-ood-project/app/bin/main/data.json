@@ -3,6 +3,7 @@
     {
       "name": "PET plast",
       "recyclingCategory": "PLASTIC",
+      "environmentalImpactValue": 3.5,
       "recyclingGuidance": [
         "Rinse - no greasy packaging permitted.",
         "Compress the objects to save space.",
@@ -12,6 +13,7 @@
     {
       "name": "Aluminium",
       "recyclingCategory": "METAL",
+      "environmentalImpactValue": 8.1,
       "recyclingGuidance": [
         "Rinse - no greasy packaging permitted.",
         "Compress the object if possible.",
@@ -21,6 +23,7 @@
     {
       "name": "Cardboard",
       "recyclingCategory": "CARDBOARD",
+      "environmentalImpactValue": 1.1,
       "recyclingGuidance": [
         "Fold flat.",
         "Place in the paper packaging recycling bin.",
@@ -30,6 +33,7 @@
     {
       "name": "Glass",
       "recyclingCategory": "GLASS",
+      "environmentalImpactValue": 0.9,
       "recyclingGuidance": [
         "Seperate the metal lid and recycle accordingly.",
         "Place in the glass recycling bin.",
@@ -39,6 +43,7 @@
     {
       "name": "Organic material",
       "recyclingCategory": "BIO_WASTE",
+      "environmentalImpactValue": 0.3,
       "recyclingGuidance": [
         "Dispose in the food waste container.",
         "No oil permitted."

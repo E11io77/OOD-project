@@ -3,7 +3,6 @@ import com.myApp.domain.SimpleSumStrategy;
 import com.myApp.domain.WeightedByLifespanStrategy;
 import com.myApp.application.ProductService;
 import com.myApp.application.RecyclingGuidanceService;
-import com.myApp.domain.Material;
 import com.myApp.domain.Product;
 import java.util.List;
 import java.util.Scanner;
@@ -138,10 +137,6 @@ public class ProductMenu {
     private void showRecyclingInstructions(Product product) {
         String guidance = RecyclingGuidanceService.getGuidance(product);
         System.out.println("\n--- Recycling Instructions for " + product.getName() + " ---");
-
-        for (Material material : product.getMaterials()) {
         System.out.println(guidance);
         }
     }
-
-}
