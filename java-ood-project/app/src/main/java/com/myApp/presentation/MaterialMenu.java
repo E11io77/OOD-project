@@ -1,6 +1,9 @@
 package com.myApp.presentation;
 import com.myApp.domain.Material;
+import com.myApp.domain.RecyclingCategory;
 import com.myApp.application.MaterialService;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class MaterialMenu {
@@ -35,7 +38,28 @@ public class MaterialMenu {
 
 
     private void addMaterial() {
-        System.out.println("Adding material - coming soon!");
+        System.out.println("--- Adding material ---");
+
+        System.out.println("Enter name: ");
+        String name = scanner.nextLine();
+
+        System.out.println("Choose recycling category: ");
+
+        RecyclingCategory[] categories = RecyclingCategory.values();
+            for (int i = 0; i < categories.length; i++) {
+                System.out.println((i + 1) + ". " + categories[i]);
+            }
+        int index = Integer.parseInt(scanner.nextLine()) - 1;
+            RecyclingCategory category = categories[index];
+
+        System.out.println("Enter recycling instructions: ");
+        System.out.println("Recycling instructions would be added by an administrator, not end user.");
+        List<String> recyclingGuidance = new ArrayList<>();
+        System.out.println("Enter impact value: ");
+        double impact = Double.parseDouble(scanner.nextLine());
+
+        Material material = new Material(name, category, recyclingGuidance, impact);
+        materialService.addMaterial(material);
 
     }
 
