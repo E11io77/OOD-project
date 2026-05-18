@@ -19,4 +19,8 @@ public class MaterialService {
      public Optional<Material> getMaterial(String name) {
         return materialRepository.findByName(name);
     }
+
+    public void addMaterial(Material material) {
+        materialRepository.addMaterial(material);
+    }
 }
