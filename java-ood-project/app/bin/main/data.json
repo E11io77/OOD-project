@@ -84,8 +84,8 @@
     {
       "name": "Juice carton",
       "category": "Beverage container",
-      "estimatedLifeSpan": 1,
+      "estimatedLifeSpan": 2,
       "materialNames": ["Cardboard", "Aluminium"]
-}
+    }
   ]
 }
