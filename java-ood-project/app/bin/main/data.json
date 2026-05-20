@@ -80,6 +80,12 @@
       "category": "Food",
       "estimatedLifeSpan": 1,
       "materialNames": ["Organic material"]
-    }
+    },
+    {
+      "name": "Juice carton",
+      "category": "Beverage container",
+      "estimatedLifeSpan": 1,
+      "materialNames": ["Cardboard", "Aluminium"]
+}
   ]
 }
