@@ -29,7 +29,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         RecyclingGuidanceService recyclingGuidanceService = new RecyclingGuidanceService();
-        ProductMenu productMenu = new ProductMenu(scanner, productService, recyclingGuidanceService);
+        ProductMenu productMenu = new ProductMenu(scanner, productService, recyclingGuidanceService, materialService);
         MaterialMenu materialMenu = new MaterialMenu(scanner, materialService);
 
         MainMenu mainMenu = new MainMenu(scanner, productMenu, materialMenu);

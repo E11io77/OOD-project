@@ -29,4 +29,8 @@ public class ProductService {
     public void setImpactCalculator(ImpactCalculator impactCalculator) {
         this.impactCalculator = impactCalculator;
     }
+
+    public void addProduct(Product product) {
+    productRepository.addProduct(product);
+    }
 }
