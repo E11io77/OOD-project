@@ -3,18 +3,22 @@ import com.myApp.domain.SimpleSumStrategy;
 import com.myApp.domain.WeightedByLifespanStrategy;
 import com.myApp.application.ProductService;
 import com.myApp.application.RecyclingGuidanceService;
+import com.myApp.application.MaterialService;
+import com.myApp.domain.Material;
 import com.myApp.domain.Product;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class ProductMenu {
     private Scanner scanner;
     private ProductService productService;
-    private RecyclingGuidanceService recyclingGuidanceService;
+    private MaterialService materialService;
 
-    public ProductMenu(Scanner scanner, ProductService productService, RecyclingGuidanceService recyclingGuidanceService) {
+    public ProductMenu(Scanner scanner, ProductService productService, RecyclingGuidanceService recyclingGuidanceService, MaterialService materialService) {
                 this.scanner = scanner;
                 this.productService = productService;
-                this.recyclingGuidanceService = recyclingGuidanceService;
+                this.materialService = materialService;
     }
     public void show() {
         boolean inMenu = true;
@@ -39,24 +43,6 @@ public class ProductMenu {
         }
     }
 
-    //private void listProducts() {
-    //    List<Product> products = productService.listProducts();
-    //        if (products.isEmpty()) {
-    //        System.out.println("No products found.");
-    //        return; 
-    //    }
-    //    }
-    //     System.out.println("\n--- All Products ---");
-    //    for (Product product : products) {
-    //        System.out.println(product.getName() + " | " + product.getCategory());
-    //}
-    //}
-    //
-//
-    //private void selectProducts() {
-//
-    //}
-
     private Product handleProductSelection() {
         List<Product> products = productService.listProducts();
 
@@ -71,7 +57,7 @@ public class ProductMenu {
         String choice = scanner.nextLine();
 
         if (choice.equalsIgnoreCase("A")) {
-            System.out.println("Work in progress");
+            addNewProduct();
             return null;
         }
 
@@ -139,4 +125,47 @@ public class ProductMenu {
         System.out.println("\n--- Recycling Instructions for " + product.getName() + " ---");
         System.out.println(guidance);
         }
+
+    
+    private void addNewProduct () {
+        System.out.println("--- Adding product ---");
+        System.out.println("Enter name: ");
+        String name = scanner.nextLine();
+
+        System.out.println("Enter category: ");
+        String category = scanner.nextLine();
+
+        System.out.println("Enter life span: ");
+        int lifeSpan = Integer.parseInt(scanner.nextLine()); // po zadání nechá znak \n, další scanner vyhodnotí jako prázdná řádek - proto nextLine a pak se převede na číslo
+
+        List<Material> selectedMaterials = new ArrayList<>();
+        List<Material> availableMaterials = materialService.listMaterials();
+        
+        boolean selectingMaterials = true;
+            while (selectingMaterials) {
+            System.out.println("Enter materials: ");
+            System.out.println("\nPlease choose from the list of materials");
+            System.out.println("\nOnce done, press D");
+            for (int i = 0; i < availableMaterials.size(); i++) {
+                System.out.println((i + 1) + ". " + availableMaterials.get(i).getName());
+            }
+
+            System.out.print("Your choice: ");
+
+            String choice = scanner.nextLine();
+
+            if (choice.equalsIgnoreCase("D")) {
+                selectingMaterials = false;
+            } else {
+                int index = Integer.parseInt(choice) - 1;
+                selectedMaterials.add(availableMaterials.get(index));
+                System.out.println("Added: " + availableMaterials.get(index).getName());
+            }
+    }
+
+        Product product = new Product(name, category, lifeSpan, selectedMaterials);
+        productService.addProduct(product);
+        System.out.println("Product added!");
+    }
+
     }
