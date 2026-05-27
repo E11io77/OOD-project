@@ -38,10 +38,11 @@ public class MainMenu {
         
     }
     private void printMenu() {
-        System.out.println("\n=== Main Menu ===");
+        System.out.println("\n=== Main Menu ===\n");
+        System.out.println("Choose from the selection below: \n");
         System.out.println("1. Products");
         System.out.println("2. Materials");
         System.out.println("E. Exit");
-        System.out.print("Your choice: ");
+        System.out.print("\nYour choice: ");
     }
 }

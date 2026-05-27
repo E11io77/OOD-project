@@ -46,13 +46,13 @@ public class ProductMenu {
     private Product handleProductSelection() {
         List<Product> products = productService.listProducts();
 
-        System.out.println("\n--- Select a Product ---");
+        System.out.println("\n--- Select a Product ---\n");
         for (int i = 0; i < products.size(); i++) {
             System.out.println((i + 1) + ". " + products.get(i).getName() + " | " + products.get(i).getCategory());
         }
         
         System.out.println("A. Add new product");
-        System.out.print("Your choice: ");
+        System.out.print("\nYour choice: ");
 
         String choice = scanner.nextLine();
 
@@ -66,11 +66,12 @@ public class ProductMenu {
     }
 
     private void showProductActions(Product product) {
-        System.out.println("\n--- Selected: " + product.getName() + " ---");
+        System.out.println("\n--- Selected: " + product.getName() + " ---\n");
         System.out.println("1. Show recycling instructions");
         System.out.println("2. Calculate impact value");
+        System.out.println("3. Show detailed information");
         System.out.println("B. Back");
-        System.out.print("Your choice: ");
+        System.out.print("\nYour choice: ");
 
         String choice = scanner.nextLine();
 
@@ -81,6 +82,8 @@ public class ProductMenu {
             case "2":
                 chooseImpactStrategy(product);
                 break;
+            case "3":
+                showDetailedInfo(product);
             case "b":
                 break;
             default:
@@ -89,10 +92,10 @@ public class ProductMenu {
     }
 
     private void chooseImpactStrategy(Product product) {
-        System.out.println("\n--- Select Calculation Strategy ---");
+        System.out.println("\n--- Select Calculation Strategy ---\n");
         System.out.println("1. Simple sum (total material impact)");
         System.out.println("2. Weighted by lifespan (impact per year)");
-        System.out.print("Your choice: ");
+        System.out.print("\nYour choice: ");
 
         String choice = scanner.nextLine();
         switch (choice) {
@@ -114,10 +117,10 @@ public class ProductMenu {
     }
 
     private void printMenu() {
-        System.out.println("\n--- Product Menu ---");
+        System.out.println("\n--- Product Menu ---\n");
         System.out.println("1. Select a product");
         System.out.println("b. Back");
-        System.out.print("Your choice: ");
+        System.out.print("\nYour choice: ");
     }
     
     private void showRecyclingInstructions(Product product) {
@@ -126,6 +129,19 @@ public class ProductMenu {
         System.out.println(guidance);
         }
 
+    private void showDetailedInfo(Product product){
+        System.out.println("\n--- Detailed Product Information ---\n");
+        String name = product.getName();
+        System.out.println("Name: " + name);
+        String category = product.getCategory();
+        System.out.println("Category: " + category);
+        int estimatedLifeSpan = product.getEstimatedLifeSpan();
+        System.out.println("Estimated lifespan: " + estimatedLifeSpan);
+        for (Material material : product.getMaterials()) {
+        System.out.println("Materials: " + material.getName() 
+                         + ", recycled as (" + material.getRecyclingCategory() + ")");
+        }
+    }
     
     private void addNewProduct () {
         System.out.println("--- Adding product ---");
@@ -150,7 +166,7 @@ public class ProductMenu {
                 System.out.println((i + 1) + ". " + availableMaterials.get(i).getName());
             }
 
-            System.out.print("Your choice: ");
+            System.out.print("\nYour choice: ");
 
             String choice = scanner.nextLine();
 
