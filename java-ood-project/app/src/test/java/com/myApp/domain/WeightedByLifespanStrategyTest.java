@@ -19,4 +19,17 @@ class WeightedByLifespanStrategyTest {
         // ASSERT
         assertEquals(2.2, result);
     }
+
+    @Test
+    void shouldReturnZeroWhenProductHasNoMaterials() {
+        // ARRANGE
+        Product emptyProduct = new Product("ABC", "XYZ", 1, List.of());
+        ImpactCalculator calc = new WeightedByLifespanStrategy();
+
+        // ACT
+        double result = calc.calculate(emptyProduct);
+
+        // ASSERT
+        assertEquals(0.0, result);
+}
 }
