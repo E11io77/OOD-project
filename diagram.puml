@@ -1,110 +1,170 @@
 @startuml Diagram
 
 package "infrastructure" {
-    class Main {
-
+    class DataLoader {
+      - objectMapper: ObjectMapper
+      + load(filePath: String, materialRepo: MaterialRepository, productRepo: ProductRepository): void
     }
 }
+
 package "presentation" {
-    class Menu {
+    class MainMenu {
+      - scanner: Scanner
+      - productMenu: ProductMenu
+      - materialMenu: MaterialMenu
+      + start(): void
+      - printMenu(): void
+    }
+
+    class ProductMenu {
+      - scanner: Scanner
       - productService: ProductService
       - materialService: MaterialService
-      + startLoop(): void
-      # displayMainMenu(): void
-      # handleProductMenu(): void
-      # handleMaterialMenu(): void
-      # handleImpactMenu(): void
-      # handleRecyclingMenu(): void
-      # handleUserInput(input: String): void
+      + show(): void
+      - handleProductSelection(): Product
+      - showProductActions(product: Product): void
+      - addNewProduct(): void
+      - printMenu(): void
     }
- }
+
+    class MaterialMenu {
+      - scanner: Scanner
+      - materialService: MaterialService
+      + show(): void
+      - addMaterial(): void
+      - listMaterials(): void
+      - printMenu(): void
+    }
+}
+
 package "application" {
     class ProductService {
-      - products: List<Product>
-      - materialService: MaterialService
-      - calculator: ImpactCalculator
-      + createProduct(String ... args): Product
-      + fetchProduct(name: String): Product
+      - productRepository: ProductRepository
+      - impactCalculator: ImpactCalculator
+      + ProductService(repo: ProductRepository, calc: ImpactCalculator)
       + listProducts(): List<Product>
-      + recyclingGuidance(p: Product): List<String>
-      + calculateImpact(p: Product): double
+      + getProduct(name: String): Optional<Product>
+      + addProduct(product: Product): void
+      + calculateImpact(product: Product): double
+      + setImpactCalculator(calc: ImpactCalculator): void
     }
 
     class MaterialService {
-      - materials: List <Material>
-      + createMaterial(String ... args): void
-      + fetchMaterial(name: String): Material
+      - materialRepository: MaterialRepository
+      + MaterialService(repo: MaterialRepository)
       + listMaterials(): List<Material>
+      + getMaterial(name: String): Optional<Material>
+      + addMaterial(material: Material): void
     }
 
     class RecyclingGuidanceService {
-      + fetchGuidance(p: Product): List<String>
-    }
-} 
-package "domain" {
-    interface ImpactCalculator {
-      + calculate(p: Product): double
-    }
-
-    class WeightedByLifespanStrategy {
-      + calculate(p: Product): double
-    }
-
-    class SimpleSumStrategy {
-      + calculate(p: Product): double
-    }
-
-    class Product{
-      - name: String
-      - category: String
-      - estimatedLifeSpan: Integer
-      - materials: List<Material>
-      + getMaterials(): List<Material>
-      + getName(): String
-      + getCategory(): String
-      + getEstimatedLifeSpan(): Integer
-    }
-
-    class Material{
-      - name: String
-      - impactValue: double
-      - recyclingGuidance: List<String>
-      - recyclingCategory: RecyclingCategory
-      + getName(): String
-      + getImpactValue(): double
-      + getRecyclingGuidance(): List<String>
-    }
-
-
-
-    enum RecyclingCategory {
-    PLASTIC
-    PAPER
-    CRADBOARD
-    GLASS
-    METAL
-    BIO_WASTE
-    ELECTRONIC_WASTE
-    TEXTILES
+      + fetchGuidance(product: Product): List<String>
     }
 }
-Menu --> ProductService : calls
-Menu --> MaterialService: delegates to
 
-ProductService --> Product : manages
-ProductService --> RecyclingGuidanceService : calls
-ProductService --> ImpactCalculator : calls
-ProductService --> MaterialService : uses
+package "domain" {
+    interface ImpactCalculator {
+      + calculate(product: Product): double
+    }
 
-MaterialService --> Material : manages
+    class SimpleSumStrategy implements ImpactCalculator {
+      + calculate(product: Product): double
+    }
+
+    class WeightedByLifespanStrategy implements ImpactCalculator {
+      + calculate(product: Product): double
+    }
+
+    class Product {
+      - name: String
+      - category: String
+      - estimatedLifeSpan: int
+      - materials: List<Material>
+      + Product(name: String, category: String, lifespan: int, materials: List<Material>)
+      + getName(): String
+      + getCategory(): String
+      + getEstimatedLifeSpan(): int
+      + getMaterials(): List<Material>
+    }
+
+    class Material {
+      - name: String
+      - recyclingCategory: RecyclingCategory
+      - recyclingGuidance: List<String>
+      - environmentalImpactValue: double
+      + Material(name: String, category: RecyclingCategory, guidance: List<String>, impact: double)
+      + getName(): String
+      + getRecyclingCategory(): RecyclingCategory
+      + getRecyclingGuidance(): List<String>
+      + getEnvironmentalImpactValue(): double
+    }
+
+    enum RecyclingCategory {
+      PLASTIC
+      PAPER
+      CARDBOARD
+      GLASS
+      METAL
+      BIO_WASTE
+      ELECTRONIC_WASTE
+      TEXTILES
+    }
+
+    interface ProductRepository {
+      + findAll(): List<Product>
+      + findByName(name: String): Optional<Product>
+      + addProduct(product: Product): void
+    }
+
+    interface MaterialRepository {
+      + findAll(): List<Material>
+      + findByName(name: String): Optional<Material>
+      + addMaterial(material: Material): void
+    }
+
+    class LocalProductRepository implements ProductRepository {
+      - products: List<Product>
+      + findAll(): List<Product>
+      + findByName(name: String): Optional<Product>
+      + addProduct(product: Product): void
+    }
+
+    class LocalMaterialRepository implements MaterialRepository {
+      - materials: List<Material>
+      + findAll(): List<Material>
+      + findByName(name: String): Optional<Material>
+      + addMaterial(material: Material): void
+    }
+}
+
+' Presentation to Application dependencies
+MainMenu --> ProductMenu : uses
+MainMenu --> MaterialMenu : uses
+ProductMenu --> ProductService : uses
+ProductMenu --> MaterialService : uses
+MaterialMenu --> MaterialService : uses
+
+' Application to Domain dependencies
+ProductService --> ProductRepository : depends on
+ProductService --> ImpactCalculator : uses
+MaterialService --> MaterialRepository : depends on
+RecyclingGuidanceService --> Product : analyzes
+
+' Domain relationships
+Product "*" --> "*" Material : contains
+Product --> ImpactCalculator : analyzed by
 Material --> RecyclingCategory : has
 
-RecyclingGuidanceService --> Product : fetches
-RecyclingGuidanceService ..> RecyclingCategory
+SimpleSumStrategy ..> Product : calculates
+WeightedByLifespanStrategy ..> Product : calculates
 
-ImpactCalculator <|.. SimpleSumStrategy : implements
-ImpactCalculator <|.. WeightedByLifespanStrategy 
-ImpactCalculator ..> Product : analyzes
+LocalProductRepository --> Product : stores
+LocalMaterialRepository --> Material : stores
 
-Product "*" o-- "*" Material : contains
+' Infrastructure relationships
+DataLoader --> ProductRepository : populates
+DataLoader --> MaterialRepository : populates
+DataLoader --> Product : creates
+DataLoader --> Material : creates
+
 @enduml
