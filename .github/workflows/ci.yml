@@ -22,4 +22,6 @@ jobs:
 
       - name: Run tests
         working-directory: java-ood-project
-        run: ./gradlew test
+        run: |
+          chmod +x gradlew
+          ./gradlew test
