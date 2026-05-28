@@ -27,6 +27,7 @@ public class MainMenu {
                     materialMenu.show();
                     break;
                 case "E":
+                case "e":
                     System.out.println("Thank you and have a good day!");
                     running = false;
                     break;

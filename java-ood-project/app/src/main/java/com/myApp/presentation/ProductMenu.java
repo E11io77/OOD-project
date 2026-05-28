@@ -78,12 +78,15 @@ public class ProductMenu {
         switch (choice) {
             case "1":
                 showRecyclingInstructions(product);
+                showProductActions(product);
                 break;
             case "2":
                 chooseImpactStrategy(product);
+                showProductActions(product);
                 break;
             case "3":
                 showDetailedInfo(product);
+                showProductActions(product);
             case "b":
                 break;
             default:
