@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-class MaterialTest {
+public class MaterialTest {
 
     @Test
     void shouldStoreCorrectName() {
