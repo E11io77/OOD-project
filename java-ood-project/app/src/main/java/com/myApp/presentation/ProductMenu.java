@@ -14,11 +14,13 @@ public class ProductMenu {
     private Scanner scanner;
     private ProductService productService;
     private MaterialService materialService;
+	private RecyclingGuidanceService recyclingGuidanceService;
 
     public ProductMenu(Scanner scanner, ProductService productService, RecyclingGuidanceService recyclingGuidanceService, MaterialService materialService) {
                 this.scanner = scanner;
                 this.productService = productService;
                 this.materialService = materialService;
+                this.recyclingGuidanceService = recyclingGuidanceService;
     }
     public void show() {
         boolean inMenu = true;
@@ -127,9 +129,15 @@ public class ProductMenu {
     }
     
     private void showRecyclingInstructions(Product product) {
-        String guidance = RecyclingGuidanceService.getGuidance(product);
+        List<Material> materials = recyclingGuidanceService.getGuidance(product);
         System.out.println("\n--- Recycling Instructions for " + product.getName() + " ---");
-        System.out.println(guidance);
+        for (Material material : materials) {
+            System.out.println("\nMaterial: " + material.getName()
+                         + " (" + material.getRecyclingCategory() + ")");
+            for (String instruction : material.getRecyclingGuidance()) {
+                System.out.println("  - " + instruction);
+        }
+    }
         }
 
     private void showDetailedInfo(Product product){
