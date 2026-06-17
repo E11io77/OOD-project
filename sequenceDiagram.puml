@@ -1,5 +1,5 @@
 @startuml sequenceDiagram
-title createProduct choice
+title addProduct feature
 participant User
 participant ProductMenu
 participant MaterialService

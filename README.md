@@ -32,3 +32,6 @@ Products can contain one or more materials. In case of a product being made out 
    
 Thanks to this approach, the system simulates real-world recycling practice where mixed-material 
 products must be taken apart to recycle each material separately.
+
+Sequence diagram:
+As a part of Week 10, a sequence diagram has been created via https://sequencediagram.org/. The ProductMenu is the key player in the creation of new products, calling other classes, obtaining result and so on. First the system asks the user to add basic information about the product, calling MaterialService to receive the list of materials, showing it to the user so they can choose from the selection. This continues in a loop until a "D" key is entered. Afterwards ProductMenu creates the new product with its new attributes, forwarding it then to the ProductService, adding it to the ProductRepository. ProductMenu then creates a message for the user, informing them of the action completion.
