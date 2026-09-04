@@ -1,10 +1,5 @@
 @startuml Diagram
 
-package "infrastructure" {
-    class Main {
-
-    }
-}
 package "presentation" {
     class Menu {
       - productService: ProductService
