@@ -7,7 +7,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./java-ood-project
     steps:
       - uses: actions/checkout@v4
 
@@ -20,8 +22,5 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Run tests
-        working-directory: java-ood-project
-        run: |
-          chmod +x gradlew
-          ./gradlew test
+      - name: Run Tests
+        run: gradle test

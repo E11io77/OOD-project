@@ -25,7 +25,16 @@ public class Main {
         ProductService productService = new ProductService(productRepository, impactCalculator);
 
         DataLoader dataLoader = new DataLoader();
-        dataLoader.load("java-ood-project/app/src/main/resources/data.json", materialRepository, productRepository);
+        try {
+            String filePath = new java.io.File(
+                Main.class.getClassLoader().getResource("data.json").toURI()
+            ).getPath();
+            dataLoader.load(filePath, materialRepository, productRepository);
+        } catch (Exception e) {
+            System.out.println("Could not load data: " + e.getMessage());
+        }
+
+        
 
         Scanner scanner = new Scanner(System.in);
         RecyclingGuidanceService recyclingGuidanceService = new RecyclingGuidanceService();

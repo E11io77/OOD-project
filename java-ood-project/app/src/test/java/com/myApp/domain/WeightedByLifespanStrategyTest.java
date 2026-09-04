@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-class WeightedByLifespanStrategyTest {
+public class WeightedByLifespanStrategyTest {
 
     @Test
     void shouldDivideImpactByLifespan() {
@@ -23,7 +23,7 @@ class WeightedByLifespanStrategyTest {
     @Test
     void shouldReturnZeroWhenProductHasNoMaterials() {
         // ARRANGE
-        Product emptyProduct = new Product("ABC", "XYZ", 1, List.of());
+        Product emptyProduct = new Product("Empty", "Test", 1, List.of());
         ImpactCalculator calc = new WeightedByLifespanStrategy();
 
         // ACT

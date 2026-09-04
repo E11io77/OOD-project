@@ -1,0 +1,32 @@
+@startuml sequenceDiagram
+title addProduct feature
+participant User
+participant ProductMenu
+participant MaterialService
+participant ProductService
+participant ProductRepository
+User->ProductMenu:select A. Add new product
+activate ProductMenu
+User<--ProductMenu:prompt: enter name
+User->ProductMenu:name:String 
+User<--ProductMenu:prompt: enter category
+User->ProductMenu:category:String 
+User<--ProductMenu:prompt: enter life span
+User->ProductMenu:life span:int
+User<--ProductMenu:prompt: enter materials
+ProductMenu ->MaterialService: listMaterials()
+activate MaterialService
+ProductMenu <-- MaterialService:List<Materials>
+deactivate MaterialService
+User<--ProductMenu:showing material list
+group loop 
+User->ProductMenu: user adds materials (until "D" like done)
+end
+note over ProductMenu: new Product(name, cat, lifespan, materials)
+ProductMenu ->ProductService: addProduct(product)
+activate ProductService
+ProductService ->ProductRepository: addProduct(product)
+note over ProductRepository: products.add(product)
+ProductRepository --> ProductService:
+deactivate ProductService
+ProductMenu --> User: "Product Added"

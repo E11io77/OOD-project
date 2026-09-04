@@ -1,12 +1,5 @@
 @startuml Diagram
 
-package "infrastructure" {
-    class DataLoader {
-      - objectMapper: ObjectMapper
-      + load(filePath: String, materialRepo: MaterialRepository, productRepo: ProductRepository): void
-    }
-}
-
 package "presentation" {
     class MainMenu {
       - scanner: Scanner

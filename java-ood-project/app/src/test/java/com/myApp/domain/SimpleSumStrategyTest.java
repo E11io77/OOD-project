@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-class SimpleSumStrategyTest {
+public class SimpleSumStrategyTest {
 
     @Test //testy jsou jiné metody ve stejné třídě
     void shouldSumImpactValuesOfAllMaterials() {

@@ -27,6 +27,10 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
 }
 
+run {
+    standardInput = System.in
+}
+
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
@@ -36,10 +40,19 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = 'ood.App'
+    mainClass = 'com.myApp.Main'
 }
 
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "failed", "skipped"
+        showStandardStreams = true
+    }
 }
