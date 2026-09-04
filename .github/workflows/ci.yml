@@ -21,7 +21,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Run tests
-        working-directory: java-ood-project
+        working-directory: ./java-ood-project
         run: |
           chmod +x gradlew
           ./gradlew test
