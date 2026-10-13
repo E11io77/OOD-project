@@ -7,12 +7,12 @@ import com.myApp.application.ProductService;
 import com.myApp.application.RecyclingGuidanceService;
 import com.myApp.domain.ImpactCalculator;
 import com.myApp.domain.SimpleSumStrategy;
-import com.myApp.domain.LocalMaterialRepository;
-import com.myApp.domain.LocalProductRepository;
 import com.myApp.presentation.MainMenu;
 import com.myApp.presentation.MaterialMenu;
 import com.myApp.presentation.ProductMenu;
 import com.myApp.infrastructure.DataLoader;
+import com.myApp.infrastructure.LocalMaterialRepository;
+import com.myApp.infrastructure.LocalProductRepository;
 
 public class Main {
     public static void main(String[] args) {

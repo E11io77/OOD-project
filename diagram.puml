@@ -1,7 +1,7 @@
 @startuml Diagram
 
 package "presentation" {
-    class MainMenu {
+class MainMenu {
       - scanner: Scanner
       - productMenu: ProductMenu
       - materialMenu: MaterialMenu
@@ -13,13 +13,16 @@ package "presentation" {
       - scanner: Scanner
       - productService: ProductService
       - materialService: MaterialService
+- recyclingGuidanceService: RecyclingGuidanceService
       + show(): void
       - handleProductSelection(): Product
       - showProductActions(product: Product): void
+      - chooseImpactStrategy(product: Product): void
+      - showRecyclingInstructions(product: Product): void
+      - showDetailedInfo(product: Product): void
       - addNewProduct(): void
       - printMenu(): void
     }
-
     class MaterialMenu {
       - scanner: Scanner
       - materialService: MaterialService
@@ -56,6 +59,19 @@ package "application" {
 }
 
 package "domain" {
+
+    interface ProductRepository {
+      + findAll(): List<Product>
+      + findByName(name: String): Optional<Product>
+      + addProduct(product: Product): void
+    }
+
+    interface MaterialRepository {
+      + findAll(): List<Material>
+      + findByName(name: String): Optional<Material>
+      + addMaterial(material: Material): void
+    }
+
     interface ImpactCalculator {
       + calculate(product: Product): double
     }
@@ -102,62 +118,57 @@ package "domain" {
       ELECTRONIC_WASTE
       TEXTILES
     }
+}
 
-    interface ProductRepository {
-      + findAll(): List<Product>
-      + findByName(name: String): Optional<Product>
-      + addProduct(product: Product): void
-    }
-
-    interface MaterialRepository {
-      + findAll(): List<Material>
-      + findByName(name: String): Optional<Material>
-      + addMaterial(material: Material): void
-    }
-
-    class LocalProductRepository implements ProductRepository {
+package "infrastructure" {
+    class LocalProductRepository {
       - products: List<Product>
+      + addProduct(product: Product): void
       + findAll(): List<Product>
       + findByName(name: String): Optional<Product>
-      + addProduct(product: Product): void
     }
 
-    class LocalMaterialRepository implements MaterialRepository {
+    class LocalMaterialRepository {
       - materials: List<Material>
+      + addMaterial(material: Material): void
       + findAll(): List<Material>
       + findByName(name: String): Optional<Material>
-      + addMaterial(material: Material): void
+    }
+
+    class DataLoader {
+      - objectMapper: ObjectMapper
+      + load
     }
 }
 
-' Presentation to Application dependencies
-MainMenu --> ProductMenu : uses
-MainMenu --> MaterialMenu : uses
-ProductMenu --> ProductService : uses
+MainMenu --> ProductMenu : opens
+MainMenu --> MaterialMenu : opens
+ProductMenu --> ProductService : calls
 ProductMenu --> MaterialService : uses
-MaterialMenu --> MaterialService : uses
+ProductMenu --> RecyclingGuidanceService : calls
+MaterialMenu --> MaterialService : calls
 
-' Application to Domain dependencies
-ProductService --> ProductRepository : depends on
-ProductService --> ImpactCalculator : uses
-MaterialService --> MaterialRepository : depends on
-RecyclingGuidanceService --> Product : analyzes
+ProductService --> Product : manages
+ProductService --> RecyclingGuidanceService : calls
+ProductService --> ImpactCalculator : calls
+ProductService --> MaterialService : uses
 
-' Domain relationships
-Product "*" --> "*" Material : contains
-Product --> ImpactCalculator : analyzed by
+MaterialService --> Material : manages
 Material --> RecyclingCategory : has
 
-SimpleSumStrategy ..> Product : calculates
-WeightedByLifespanStrategy ..> Product : calculates
+RecyclingGuidanceService --> Product : fetches
+RecyclingGuidanceService ..> RecyclingCategory
 
-LocalProductRepository --> Product : stores
-LocalMaterialRepository --> Material : stores
+ImpactCalculator <|.. SimpleSumStrategy : implements
+ImpactCalculator <|.. WeightedByLifespanStrategy 
+ImpactCalculator ..> Product : analyzes
 
-' Infrastructure relationships
-DataLoader --> ProductRepository : populates
-DataLoader --> MaterialRepository : populates
-DataLoader --> Product : creates
-DataLoader --> Material : creates
+Product "*" o-- "*" Material : contains
+
+DataLoader ..> MaterialRepository: loads
+DataLoader ..> ProductRepository: loads
+
+MaterialRepository <|.. LocalMaterialRepository
+ProductRepository <|.. LocalProductRepository
 
 @enduml
