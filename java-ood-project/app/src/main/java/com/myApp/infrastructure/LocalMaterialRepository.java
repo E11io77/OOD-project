@@ -1,8 +1,11 @@
-package com.myApp.domain;
+package com.myApp.infrastructure;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import com.myApp.domain.Material;
+import com.myApp.domain.MaterialRepository;
 public class LocalMaterialRepository implements MaterialRepository {
     private List <Material> materials = new ArrayList<>();
     

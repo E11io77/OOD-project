@@ -1,16 +1,35 @@
 @startuml Diagram
 
 package "presentation" {
-    class Menu {
+class MainMenu {
+      - scanner: Scanner
+      - productMenu: ProductMenu
+      - materialMenu: MaterialMenu
+      + start(): void
+      - printMenu(): void
+    }
+
+    class ProductMenu {
+      - scanner: Scanner
       - productService: ProductService
       - materialService: MaterialService
-      + startLoop(): void
-      # displayMainMenu(): void
-      # handleProductMenu(): void
-      # handleMaterialMenu(): void
-      # handleImpactMenu(): void
-      # handleRecyclingMenu(): void
-      # handleUserInput(input: String): void
+- recyclingGuidanceService: RecyclingGuidanceService
+      + show(): void
+      - handleProductSelection(): Product
+      - showProductActions(product: Product): void
+      - chooseImpactStrategy(product: Product): void
+      - showRecyclingInstructions(product: Product): void
+      - showDetailedInfo(product: Product): void
+      - addNewProduct(): void
+      - printMenu(): void
+    }
+    class MaterialMenu {
+      - scanner: Scanner
+      - materialService: MaterialService
+      + show(): void
+      - addMaterial(): void
+      - listMaterials(): void
+      - printMenu(): void
     }
  }
 package "application" {
@@ -37,6 +56,19 @@ package "application" {
     }
 } 
 package "domain" {
+
+    interface ProductRepository {
+      + findAll(): List<Product>
+      + findByName(name: String): Optional<Product>
+      + addProduct(product: Product): void
+    }
+
+    interface MaterialRepository {
+      + findAll(): List<Material>
+      + findByName(name: String): Optional<Material>
+      + addMaterial(material: Material): void
+    }
+
     interface ImpactCalculator {
       + calculate(p: Product): double
     }
@@ -83,8 +115,34 @@ package "domain" {
     TEXTILES
     }
 }
-Menu --> ProductService : calls
-Menu --> MaterialService: delegates to
+
+package "infrastructure" {
+    class LocalProductRepository {
+      - products: List<Product>
+      + addProduct(product: Product): void
+      + findAll(): List<Product>
+      + findByName(name: String): Optional<Product>
+    }
+
+    class LocalMaterialRepository {
+      - materials: List<Material>
+      + addMaterial(material: Material): void
+      + findAll(): List<Material>
+      + findByName(name: String): Optional<Material>
+    }
+
+    class DataLoader {
+      - objectMapper: ObjectMapper
+      + load
+    }
+}
+
+MainMenu --> ProductMenu : opens
+MainMenu --> MaterialMenu : opens
+ProductMenu --> ProductService : calls
+ProductMenu --> MaterialService : uses
+ProductMenu --> RecyclingGuidanceService : calls
+MaterialMenu --> MaterialService : calls
 
 ProductService --> Product : manages
 ProductService --> RecyclingGuidanceService : calls
@@ -102,4 +160,11 @@ ImpactCalculator <|.. WeightedByLifespanStrategy
 ImpactCalculator ..> Product : analyzes
 
 Product "*" o-- "*" Material : contains
+
+DataLoader ..> MaterialRepository: loads
+DataLoader ..> ProductRepository: loads
+
+MaterialRepository <|.. LocalMaterialRepository
+ProductRepository <|.. LocalProductRepository
+
 @enduml

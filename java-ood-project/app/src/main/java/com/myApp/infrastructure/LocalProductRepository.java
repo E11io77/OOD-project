@@ -1,8 +1,11 @@
-package com.myApp.domain;
+package com.myApp.infrastructure;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import com.myApp.domain.Product;
+import com.myApp.domain.ProductRepository;
 public class LocalProductRepository implements ProductRepository {
     private List <Product> products = new ArrayList<>();
     
